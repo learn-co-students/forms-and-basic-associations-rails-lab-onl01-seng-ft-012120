@@ -1,9 +1,39 @@
 <h1>Create a Song</h1>
 
 <%= form_for @song  do |f| %>
-  <%= f.label :title %>
+  <%= f.label :title, "Song Title" %>
   <%= f.text_field :title %>
   <br />
+  <%= f.label :artist_name, "Artist's Name" %>
+  <%= f.text_field :artist_name %>
+  <br />
+  
+  <%=f.label "Select Genre"%>
+  <%=f.collection_select :genre_id, Genre.all, :id, :name%>
+  <%# <%=f.select :genre_id, options_from_collection_for_select(Genre.all, "id", "name") %> 
+
+  <%# <%=f.collection_select :genre_name, Genre.all, :name, :name%> 
+
+<%# this is for if you want to select form existing OR type in new. we just want to select from existing..oops %>
+  <%#=f.text_field :genre_name, list: "genres_autocomplete"%>
+    <%# <datalist id="genres_autocomplete"> %>
+      <%#Genre.all.each do |genre|%>
+        <%# <option value="<%=genre.name%>
+      <%#end%>
+    <%# </datalist> %>
+
+
+  <%# <%=f.text_field :notes%> 
+
+    <%# <input name="song[note_ids][]"> %>
+  <h2>Notes</h2>
+<%# copied from solution bc my tries did not work. %>
+  <%= f.fields_for :notes do |note_form| %>
+    <%= note_form.label :note %>
+    <%= note_form.text_area :content, rows: 5, cols: 50 %>
+    <br/>
+  <% end %>
+
 
   <%= f.submit %>
 <% end %>
